@@ -1,0 +1,35 @@
+diff -ur org/project.vim new/project.vim
+--- org/project.vim     2006-10-13 22:47:08.000000000 +0900
++++ new/project.vim     2008-03-11 02:36:15.000000000 +0900
+@@ -21,7 +21,8 @@
+         let filename=bufname(g:proj_running)
+     else
+         if strlen(a:filename) == 0
+-            let filename ='~/.vimprojects'      " Default project filename
++            "let filename ='~/.vimprojects'      " Default project filename
++            let filename ='./.vimprojects'      " Default project filename
+         else
+             let filename = a:filename
+         endif
+@@ -971,12 +972,18 @@
+             let home=substitute(a:info, '.\{-}"\(.\{-}\)".*', '\1', '')
+             if strlen(home) != strlen(a:info) | let home=escape(home, ' ') | endif
+         endif
++        let parent_home=a:parent_home
++        if parent_home == ''
++            if !s:IsAbsolutePath(home)
++                let parent_home = fnamemodify(bufname("%"),":p:h")
++            endif
++        endif
+         if strlen(home) == strlen(a:info)
+-            let home=a:parent_home
++            let home=parent_home
+         elseif home=='.'
+-            let home=a:parent_home
++            let home=parent_home
+         elseif !s:IsAbsolutePath(home)
+-            let home=a:parent_home.'/'.home
++            let home=parent_home.'/'.home
+         endif
+         return home
+     endfunction
