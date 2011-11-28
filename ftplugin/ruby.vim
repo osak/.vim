@@ -240,8 +240,6 @@ function! RubyCursorIdentifier()
   return stripped == '' ? expand("<cword>") : stripped
 endfunction
 
-setlocal expandtab
-
 "
 " Instructions for enabling "matchit" support:
 "
